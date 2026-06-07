@@ -1,83 +1,258 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AgroGestor</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroConecta 2.0</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-<header>
-    <h1>🌱 AgroGestor</h1>
-    <p>Tecnologia que fortalece o campo</p>
-</header>
+    <!-- HEADER -->
 
-<div class="container">
-
-    <div class="card login">
-        <h2>Login Administrador</h2>
-
-        <input type="text" id="user" placeholder="Usuário">
-
-        <input type="password" id="pass" placeholder="Senha">
-
-        <button onclick="login()">
-            Entrar
-        </button>
-
-        <p class="info">
-            Usuário: admin | Senha: 1234
-        </p>
-    </div>
-
-    <div class="card" id="painel">
-
-        <h2>Dashboard</h2>
-
-        <div class="stats">
-            <div class="box">
-                <h3>Produção Total</h3>
-                <p id="prod">0 kg</p>
-            </div>
-
-            <div class="box">
-                <h3>Receita Estimada</h3>
-                <p id="rec">R$ 0,00</p>
-            </div>
+    <header>
+        <div class="logo">
+            🌱 AgroConecta
         </div>
 
-        <h2>Cadastro de Produção</h2>
+        <nav>
+            <a href="#inicio">Início</a>
+            <a href="#dashboard">Dashboard</a>
+            <a href="#produtos">Produtos</a>
+            <a href="#carrinho">Carrinho</a>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+
+    <section id="inicio" class="hero">
+
+        <div class="hero-texto">
+
+            <h1>
+                Conectando o Campo e a Cidade
+            </h1>
+
+            <p>
+                Plataforma digital para produtores rurais divulgarem seus produtos
+                e consumidores encontrarem alimentos frescos diretamente do campo.
+            </p>
+
+            <div class="botoes">
+                <button onclick="mostrarLoginProdutor()">
+                    👨‍🌾 Sou Produtor
+                </button>
+
+                <button onclick="mostrarLoginComprador()">
+                    🛒 Sou Comprador
+                </button>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- LOGIN PRODUTOR -->
+
+    <section class="modal" id="loginProdutor">
+
+        <div class="card-login">
+
+            <h2>Login do Produtor</h2>
+
+            <input type="text"
+                id="usuarioProdutor"
+                placeholder="Usuário">
+
+            <input type="password"
+                id="senhaProdutor"
+                placeholder="Senha">
+
+            <button onclick="loginProdutor()">
+                Entrar
+            </button>
+
+            <button class="fechar"
+                onclick="fecharLogin()">
+                Fechar
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- LOGIN COMPRADOR -->
+
+    <section class="modal" id="loginComprador">
+
+        <div class="card-login">
+
+            <h2>Login do Comprador</h2>
+
+            <input type="text"
+                id="usuarioComprador"
+                placeholder="Usuário">
+
+            <input type="password"
+                id="senhaComprador"
+                placeholder="Senha">
+
+            <button onclick="loginComprador()">
+                Entrar
+            </button>
+
+            <button class="fechar"
+                onclick="fecharLogin()">
+                Fechar
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- DASHBOARD PRODUTOR -->
+
+    <section id="dashboard" class="dashboard">
+
+        <h2>Painel do Produtor</h2>
+
+        <div class="cards-dashboard">
+
+            <div class="card-info">
+                <h3>Produtos</h3>
+                <span id="totalProdutos">0</span>
+            </div>
+
+            <div class="card-info">
+                <h3>Estoque</h3>
+                <span id="estoqueTotal">0</span>
+            </div>
+
+            <div class="card-info">
+                <h3>Receita Estimada</h3>
+                <span id="receitaTotal">
+                    R$ 0,00
+                </span>
+            </div>
+
+        </div>
+
+        <!-- CADASTRO -->
+
+        <div class="cadastro-produto">
+
+            <h3>Cadastrar Produto</h3>
+
+            <input type="text"
+                id="nomeProduto"
+                placeholder="Nome do Produto">
+
+            <input type="number"
+                id="precoProduto"
+                placeholder="Preço">
+
+            <input type="number"
+                id="quantidadeProduto"
+                placeholder="Quantidade">
+
+            <input type="text"
+                id="categoriaProduto"
+                placeholder="Categoria">
+
+            <button onclick="cadastrarProduto()">
+                Publicar Produto
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- PRODUTOS -->
+
+    <section id="produtos" class="produtos">
+
+        <h2>Produtos Disponíveis</h2>
 
         <input
-        type="text"
-        id="cultura"
-        placeholder="Cultura (Tomate, Milho...)">
+            type="text"
+            id="pesquisa"
+            placeholder="Pesquisar produto..."
+            onkeyup="pesquisarProduto()">
 
-        <input
-        type="number"
-        id="qtd"
-        placeholder="Quantidade">
+        <div id="listaProdutos"
+            class="grid-produtos">
 
-        <input
-        type="number"
-        id="preco"
-        placeholder="Preço por Kg">
+        </div>
 
-        <button onclick="add()">
-            Salvar Produção
+    </section>
+
+    <!-- CARRINHO -->
+
+    <section id="carrinho" class="carrinho">
+
+        <h2>🛒 Carrinho</h2>
+
+        <div id="itensCarrinho">
+
+        </div>
+
+        <h3 id="valorTotal">
+            Total: R$ 0,00
+        </h3>
+
+        <button onclick="finalizarCompra()">
+            Finalizar Compra
         </button>
 
-        <h2>Produções Registradas</h2>
+    </section>
 
-        <ul id="lista"></ul>
+    <!-- SUSTENTABILIDADE -->
 
-    </div>
+    <section class="sustentabilidade">
 
-</div>
+        <h2>🌎 Sustentabilidade</h2>
 
-<script src="script.js"></script>
+        <div class="sust-grid">
+
+            <div class="sust-card">
+                ♻ Redução do desperdício
+            </div>
+
+            <div class="sust-card">
+                🌱 Agricultura Familiar
+            </div>
+
+            <div class="sust-card">
+                🚜 Produção Sustentável
+            </div>
+
+            <div class="sust-card">
+                💧 Uso Consciente dos Recursos
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- RODAPÉ -->
+
+    <footer>
+
+        <h3>AgroConecta 2.0</h3>
+
+        <p>
+            Projeto desenvolvido para o Concurso Agrinho 2026
+        </p>
+
+    </footer>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
